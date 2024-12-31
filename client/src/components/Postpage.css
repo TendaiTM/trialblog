@@ -1,0 +1,36 @@
+.post-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .post-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .post-page p {
+    margin: 5px 0;
+  }
+  
+  .post-content {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+  
