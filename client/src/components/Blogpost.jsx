@@ -18,8 +18,7 @@ const Blogpost = () => {
         return setMessage('Unauthorized. Please log in.');
       }
 
-      const response = await axios.post(
-        'http://localhost:5000/Blogpost',
+      const response = await axios.post('http://localhost:5000/Blogpost',
         { title, content },
         { headers: { Authorization: `Bearer ${token}` } } // Include token in the header
       );

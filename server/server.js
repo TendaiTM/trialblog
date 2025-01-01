@@ -82,23 +82,23 @@ const secretKey = process.env.JWT_SECRET;
     });
 
     // Middleware to verify token
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Extract token from "Bearer TOKEN"
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = decoded;
-
-  if (!token) {
-    return res.status(401).send({ message: 'Access denied. No token provided.' });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user info to the request
-    next(); // Proceed to the next middleware or route handler
-  } catch (err) {
-    return res.status(403).send({ message: 'Invalid token' });
-  }
-};
+    const verifyToken = (req, res, next) => {
+      const token = req.headers.authorization?.split(' ')[1]; // Extract token from "Bearer TOKEN"
+      
+      // Check if token exists
+      if (!token) {
+        return res.status(401).send({ message: 'Access denied. No token provided.' });
+      }
+    
+      try {
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // Attach user info to the request
+        next(); // Proceed to the next middleware or route handler
+      } catch (err) {
+        return res.status(403).send({ message: 'Invalid token' });
+      }
+    };
 
     // Homepage Posts Route
     app.get('/Homepage', verifyToken, (req, res) => {
@@ -123,18 +123,16 @@ const verifyToken = (req, res, next) => {
       });
     });
     
-
-
     //Blog Post Route
     app.post('/Blogpost',verifyToken, (req, res) => {
       const { title, content} = req.body;
-      const author = req.user.name;
+      const author = req.user.email;
 
       if (!title || !content || !author) {
         return res.status(400).json({ message: 'All fields are required!' });
       }
 
-      const query = 'INSERT INTO posts (title, content, author, created_at) VALUES (?, ?, ?, ?)';
+      const query = 'INSERT INTO posts (title, content, author, created_at) VALUES (?, ?, ?, NOW())';
       db.query(query, [title, content, author], (err, result) => {
         if (err) {
           console.error('Error adding post:', err);
@@ -161,6 +159,41 @@ const verifyToken = (req, res, next) => {
         }
     
         res.status(200).json(results[0]);
+      });
+    });
+    
+
+    //Route to Post Comments
+    app.post('/comments', verifyToken, (req, res) => {
+      const { post_id, content } = req.body;
+      const user_id = req.user.id; // Get the logged-in user’s ID from the token
+    
+      if (!post_id || !content) {
+        return res.status(400).json({ message: 'Post ID and content are required' });
+      }
+    
+      const query = 'INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)';
+      db.query(query, [post_id, user_id, content], (err, result) => {
+        if (err) {
+          console.error('Error adding comment:', err);
+          return res.status(500).json({ message: 'Error adding comment' });
+        }
+        res.status(200).json({ message: 'Comment added successfully' });
+      });
+    });
+    
+    //Route to Fetch Comments
+    app.get('/post/:id/comments', (req, res) => {
+      const postId = req.params.id;
+    
+      const query = 'SELECT comments.id, comments.content, comments.created_at, users.name AS author FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? ORDER BY comments.created_at DESC';
+      db.query(query, [postId], (err, results) => {
+        if (err) {
+          console.error('Error fetching comments:', err);
+          return res.status(500).json({ message: 'Error fetching comments' });
+        }
+    
+        res.status(200).json(results); // Return the comments
       });
     });
     
