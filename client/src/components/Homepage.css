@@ -7,13 +7,14 @@ body {
 
   .navbar {
     display: flex;
-    justify-content: space-between; /* Push items to the far ends */
-    align-items: center; /* Align items vertically in the center */
-    padding: 0 20px; /* Optional: Add some padding */
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 20px;
+    background-color: #4949df;
   }
   
   .navbar h1 {
-    margin: 0; /* Remove default margin */
+    margin: 0; 
   }
   
   .button {
@@ -30,11 +31,11 @@ body {
   }  
   
   .homepage {
-    max-width: 800px;
+    max-width: 1400px;
     margin: 30px auto;
     padding: 20px;
     background: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.993);
     border-radius: 8px;
   }
   
@@ -56,7 +57,7 @@ body {
   ul li {
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #404345;
     border-radius: 5px;
     transition: background 0.3s ease;
   }
@@ -74,5 +75,26 @@ body {
   
   .post-link:hover {
     color: #007bff;
+  }
+  
+  .logout-footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .logout-button {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .logout-button:hover {
+    background-color: #c9302c;
   }
   

@@ -32,8 +32,8 @@ const Blogpost = () => {
   };
 
   return (
-    <div>
-      <h2>Add a New Post</h2>
+    <div className= "blogpost">
+      <h2>Create a New Post</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <div>
@@ -41,6 +41,7 @@ const Blogpost = () => {
           <input
             type="text"
             value={title}
+            placeholder='Enter your title'
             onChange={(e) => setTitle(e.target.value)}
             required
           />

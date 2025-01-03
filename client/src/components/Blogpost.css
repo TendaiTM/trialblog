@@ -5,6 +5,15 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  .blogpost{
+    max-width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.993);
+    border-radius: 8px;
+  }
   
   /* Centered container for the Blogpost form */
   .container {
@@ -56,8 +65,9 @@ body {
   
   /* Submit button styling */
   button {
-    display: block;
-    width: 100%;
+    display: block; /* Make the button a block-level element */
+    margin: 10px auto; /* Center horizontally */
+    width: 20%; /* Optional: Adjust width if needed */
     background: #007bff;
     color: #fff;
     border: none;
@@ -65,7 +75,6 @@ body {
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 10px;
     transition: background 0.3s ease;
   }
   

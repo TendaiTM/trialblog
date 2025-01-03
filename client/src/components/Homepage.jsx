@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
 const Homepage = () => {
   const [posts, setPosts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // For navigation after logout
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -32,6 +33,12 @@ const Homepage = () => {
     fetchPosts();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');// Clear token from localStorage
+    navigate('/');// Redirect to login page
+  };
+
+
   if (loading) {
     return <div className="loading">Loading posts...</div>;
   }
@@ -44,10 +51,10 @@ const Homepage = () => {
     <div className="homepage">
       {/* Navigation Bar */}
       <nav className="navbar">
-        <h1>Blog App</h1>
+        <h1>My Historical Blogger</h1>
         <ul className="nav-links">
           <li>
-            <Link to="/Blogpost" className="nav-link">Create Blog Post</Link>
+            <Link to="/Blogpost" className="nav-link">Create a Post</Link>
           </li>
         </ul>
       </nav>
@@ -56,7 +63,6 @@ const Homepage = () => {
       <h1>All Topics</h1>
       {Object.keys(posts).map((title) => (
         <div key={title} className="topic-section">
-          <h2>{title}</h2>
           <ul>
             {posts[title].map((post, index) => (
               <li key={index}>
@@ -69,6 +75,13 @@ const Homepage = () => {
           </ul>
         </div>
       ))}
+
+      {/* Logout Section */}
+      <footer className="logout-footer">
+        <button onClick={handleLogout} className="logout-button">
+          Logout
+        </button>
+      </footer>
     </div>
   );
   

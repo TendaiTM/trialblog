@@ -89,7 +89,9 @@ const Postpage = () => {
 
   return (
     <div className="post-page">
-      <h1>{post.title}</h1>
+      <div className="post-header">
+        <h1>{post.title}</h1>
+      </div>
       <p><strong>By {post.author}</strong></p>
       <p><em>{new Date(post.created_at).toLocaleString()}</em></p>
       <div className="post-content">{post.content}</div>
