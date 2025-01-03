@@ -29,6 +29,8 @@ const secretKey = process.env.JWT_SECRET;
         // Hash the password before saving it to the database
         const saltRounds = 10; // Adjust this value based on your security needs
         const hashedPassword = await bcrypt.hash(sentPassword, saltRounds);
+        let name = req.body.name; // Example of defining `name`
+
 
         const SQL = `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`;
         const Values = [sentName, sentEmail, hashedPassword];
@@ -38,8 +40,17 @@ const secretKey = process.env.JWT_SECRET;
             console.error('Error inserting user into database:', err);
             return res.status(500).send({ message: 'Internal server error' });
           }
+
+           // Generate a JWT token
+          const token = jwt.sign({ email: sentEmail }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+          });
+
           console.log('User Inserted successfully');
-          res.status(201).send({ message: 'User added successfully' });
+          return res.status(200).send({
+            message: 'User created successfully!',
+            token,
+            });
         });
       } catch (error) {
         console.error('Error hashing password:', error);
@@ -171,9 +182,9 @@ const secretKey = process.env.JWT_SECRET;
       if (!post_id || !content) {
         return res.status(400).json({ message: 'Post ID and content are required' });
       }
-    
-      const query = 'INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)';
-      db.query(query, [post_id, user_id, content], (err, result) => {
+    //
+      const query = 'INSERT INTO comments (post_id, user_id, content, created_at) VALUES (?, ?, ?, ?)';
+      db.query(query, [post_id,user_id, content, new Date()], (err, result) => {
         if (err) {
           console.error('Error adding comment:', err);
           return res.status(500).json({ message: 'Error adding comment' });

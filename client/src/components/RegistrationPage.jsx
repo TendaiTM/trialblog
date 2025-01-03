@@ -34,6 +34,8 @@ const RegistrationPage = () => {
       setSuccess('');
       return;
     }
+
+    setIsLoading(true); // Show loading state
     
     try {
       // Sending registration request to the backend
@@ -43,15 +45,17 @@ const RegistrationPage = () => {
         password,
       });
 
+      // On successful login, store the token and redirect
+      const { token } = response.data;
+      localStorage.setItem('token', token); // Store token in local storage
+
       setSuccess(response.data.message || "User created successfully!");
       setError("");
       setName('');
       setEmail('');
       setPassword('');
-
-      setTimeout(() => {
-        navigate('/Homepage');
-      }, 2000);
+    
+      navigate("/Homepage");
 
     } catch (err) {
       setError(err.response?.data?.message || "Error creating user!");
@@ -104,9 +108,9 @@ const RegistrationPage = () => {
             />
           </div>
       
-          <button type="submit" className="button">
-            Register
-          </button>
+            <button type="submit" className="button" disabled={isLoading}>
+              {isLoading ? 'Registering...' : 'Register'}
+            </button>
         </form>
       </div>
     </div>

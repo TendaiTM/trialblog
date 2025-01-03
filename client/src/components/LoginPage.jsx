@@ -22,6 +22,7 @@ const LoginPage = () => {
     }
 
     setIsLoading(true);
+    
     try {
       // Sending login request to backend
       const response = await axios.post("http://localhost:5000/LoginPage", {

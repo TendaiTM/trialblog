@@ -4,6 +4,30 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between; /* Push items to the far ends */
+    align-items: center; /* Align items vertically in the center */
+    padding: 0 20px; /* Optional: Add some padding */
+  }
+  
+  .navbar h1 {
+    margin: 0; /* Remove default margin */
+  }
+  
+  .button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Button hover effect */
+  }  
   
   .homepage {
     max-width: 800px;
@@ -12,12 +36,6 @@ body {
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 28px;
-    color: #333;
   }
   
   .topic-section {
